@@ -1,0 +1,7 @@
+spring:
+  elasticsearch:
+    jest:
+      uris: http://localhost:9200
+      #read-timeout: 10000
+      #user
+      #secret

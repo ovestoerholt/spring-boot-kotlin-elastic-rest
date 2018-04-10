@@ -3,12 +3,14 @@ package no.stoerholt.samples
 import org.apache.http.HttpHost
 import org.elasticsearch.action.get.GetRequest
 import org.elasticsearch.action.get.GetResponse
+import org.elasticsearch.action.update.UpdateRequest
+import org.elasticsearch.action.update.UpdateResponse
 import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.stereotype.Service
 
 @Service
-class ElasticRepo {
+class BookElasticRepo {
 
 
     var client = RestHighLevelClient(
@@ -17,14 +19,23 @@ class ElasticRepo {
 
     fun getBookById(id: String): Book {
 
-        var getRequest: GetRequest = GetRequest("books", "book", id)
+        val getRequest = GetRequest("books", "book", id)
 
         // Optional arguments
         //getRequest.fetchSourceContext()
 
-        var response: GetResponse = client.get(getRequest)
+        val response: GetResponse = client.get(getRequest)
 
         return response.toBook()
+    }
+
+    fun insertBook(book: Book): Boolean {
+        val request: UpdateRequest = book.fromBook()
+        request.docAsUpsert(true)
+        val updateResponse: UpdateResponse = client.update(request)
+
+        if (updateResponse.getResult().name.equals("CREATED")) return true
+        return false
     }
 
 }

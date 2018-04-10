@@ -18,6 +18,6 @@ class BookElasticService {
     }
 
     fun search(): List<Book> {
-        return emptyList()
+        return bookElasticRepo.search()
     }
 }

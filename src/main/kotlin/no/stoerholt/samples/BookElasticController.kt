@@ -31,7 +31,7 @@ class BookElasticController {
     }
 
     @GetMapping("/search")
-    fun search(): ResponseEntity<List<Book>> {
+    fun search(): ResponseEntity<List<Book>>? {
         return ResponseEntity.ok(bookElasticService.search())
     }
 }

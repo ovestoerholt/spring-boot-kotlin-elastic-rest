@@ -13,24 +13,18 @@ import org.elasticsearch.search.SearchHit
 import org.springframework.stereotype.Repository
 
 @Repository
-class BookElasticRepo {
-
+class BookElasticRepo(elasticConfig: ElasticConfig) {
 
     var client = RestHighLevelClient(
             RestClient.builder(
-                    HttpHost("localhost", 9200, "http")))
+                    HttpHost(elasticConfig.hostname, elasticConfig.port, elasticConfig.scheme)))
 
     fun getBookById(id: String): Book {
 
         val getRequest = GetRequest("books", "book", id)
 
-        // Optional arguments
-        //getRequest.fetchSourceContext()
-
         val response: GetResponse = client.get(getRequest)
         return response.sourceAsMap.toBook()
-
-        //return response.toBook()
     }
 
     fun insertBook(book: Book): Boolean {

@@ -16,4 +16,8 @@ class BookElasticService {
     fun insertBook(book: Book): Boolean {
         return bookElasticRepo.insertBook(book)
     }
+
+    fun search(): List<Book> {
+        return emptyList()
+    }
 }

@@ -29,4 +29,9 @@ class BookElasticController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(book)
         }
     }
+
+    @GetMapping("/search")
+    fun search(): ResponseEntity<List<Book>> {
+        return ResponseEntity.ok(bookElasticService.search())
+    }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 class BookElasticController {
 
     @Autowired
-    lateinit var bookElasticService: BookElasticService;
+    lateinit var bookElasticService: BookElasticService
 
     @GetMapping("/{id}")
     fun getBookById(@PathVariable id: String): ResponseEntity<Book> {

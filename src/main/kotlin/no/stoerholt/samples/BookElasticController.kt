@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*
 class BookElasticController {
 
     @Autowired
-    lateinit var bookElasticRepo: BookElasticRepo
+    lateinit var bookElasticService: BookElasticService;
 
     @GetMapping("/{id}")
     fun getBookById(@PathVariable id: String): ResponseEntity<Book> {
 
-        val book: Book = bookElasticRepo.getBookById(id)
+        val book = bookElasticService.getBookById(id)
         return ResponseEntity.ok(book)
     }
 
@@ -23,9 +23,10 @@ class BookElasticController {
     @PostMapping("/")
     fun insertBook(@RequestBody book: Book): ResponseEntity<Book>? {
         // TODO - bad request
-        if (bookElasticRepo.insertBook(book)) {
+        if (bookElasticService.insertBook(book)) {
             return ResponseEntity.status(HttpStatus.CREATED).body(book)
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(book)
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(book)
     }
 }
